@@ -148,7 +148,21 @@ def api_chartdata():
     counts = [r[1] for r in rows]
     return jsonify({"labels": labels, "counts": counts})
 
+@app.route("/upload", methods=["POST"])
+def upload_file():
+    if "files" not in request.files:
+        flash("No file part")
+        return redirect(request.url)
+    files = request.files.getlist("files")
+    for file in files:
+        if file.filename:
+            file.save(os.path.join(UPLOAD_FOLDER, file.filename))
+    organize_files(UPLOAD_FOLDER)
+    flash("✅ Files uploaded and organized successfully!")
+    return redirect(url_for("dashboard"))
+
 
 if __name__ == "__main__":
     init_db()
     app.run(debug=True)
+
