@@ -190,11 +190,36 @@ def api_chartdata():
     counts = [r[1] for r in rows]
     return jsonify({'labels': labels, 'counts': counts})
 
+from flask import send_from_directory
+
+@app.route('/uploads')
+def view_uploads():
+    """Show the list of organized files inside uploads folder."""
+    files = []
+    for root, dirs, filenames in os.walk(UPLOAD_FOLDER):
+        for f in filenames:
+            rel_path = os.path.relpath(os.path.join(root, f), UPLOAD_FOLDER)
+            files.append(rel_path)
+    files.sort()
+
+    html = "<h2>📁 Organized Files in /uploads</h2><ul>"
+    for f in files:
+        file_url = url_for('download_file', filename=f)
+        html += f"<li><a href='{file_url}'>{f}</a></li>"
+    html += "</ul>"
+    return html
+
+
+@app.route('/uploads/<path:filename>')
+def download_file(filename):
+    return send_from_directory(UPLOAD_FOLDER, filename)
+
 
 if __name__ == "__main__":
     init_db()
     app.run(debug=True)
     #app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)), debug=True)
+
 
 
 
