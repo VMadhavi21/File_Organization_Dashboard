@@ -3,7 +3,7 @@ import os, shutil, sqlite3, subprocess
 from datetime import datetime
 
 app = Flask(__name__)
-app.secret_key = "SmartOrganizerSecret"
+app.secret_key = "MGForever"
 
 UPLOAD_FOLDER = os.path.join(os.getcwd(), "uploads")
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -165,4 +165,5 @@ def upload_file():
 if __name__ == "__main__":
     init_db()
     app.run(debug=True)
+
 
