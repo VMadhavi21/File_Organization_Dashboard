@@ -28,6 +28,10 @@
         <h3>Dashboard</h3>
         <button class="btn btn-light btn-sm" id="organizeBtn">Organize Now</button>
       </div>
+<form action="/upload" method="post" enctype="multipart/form-data" class="mb-3">
+  <input type="file" name="files" multiple required class="form-control w-50 d-inline-block">
+  <button class="btn btn-primary btn-sm" type="submit">Upload & Organize</button>
+</form>
 
       <div class="row g-3 mb-4">
         <div class="col-md-3"><div class="card p-3"><h6>Total Files</h6><h2 id="totalFiles">0</h2></div></div>
